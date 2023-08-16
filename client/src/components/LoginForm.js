@@ -1,10 +1,11 @@
 import { useState } from "react";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 
-export default function () {
+function LoginForm () {
   const [inputData, setInputData] = useState({
     userId: "",
     password: "",
@@ -22,7 +23,7 @@ export default function () {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputData);
+    axios.post("http://localhost:4000/login", inputData)
   }
 
 
@@ -45,6 +46,7 @@ export default function () {
           sx={formStyle}
           variant="standard"
           type="text"
+          required
           label="User ID"
           name="userId"
           value={inputData.userId}
@@ -54,6 +56,7 @@ export default function () {
           sx={formStyle}
           variant="standard"
           type="password"
+          required
           label="Password"
           name="password"
           value={inputData.password}
@@ -83,3 +86,5 @@ export default function () {
     </Box>
   );
 }
+
+export default LoginForm;

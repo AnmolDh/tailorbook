@@ -1,11 +1,13 @@
 import express from "express";
+import cors from "cors";
 import bodyParser from "body-parser";
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
 const app = express();
 
 mongoose.connect("mongodb://localhost:27017/tb");
 
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -35,10 +37,20 @@ const testAdmin = {
   users: [],
 };
 
-Admin.create(testAdmin);
+!(await Admin.findOne({ userId: testAdmin.userId })) && Admin.create(testAdmin);
 
 app.post("/login", (req, res) => {
-
+  const reqUserId = req.body.userId;
+  const reqPassword = req.body.password;
+  const reqUserType = req.body.userType;
+  console.log(reqUserId, reqPassword, reqUserType);
+  // if (userType === "admin") {
+  //   Admin.create({
+  //     userId: reqUserId,
+  //     password: reqPassword,
+  //     users: []
+  //   })
+  // }
 });
 
 app.get("/", (req, res) => {
