@@ -5,27 +5,27 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 
-function LoginForm () {
+function LoginForm() {
   const [inputData, setInputData] = useState({
+    userType: "admin",
+    adminId: "",
     userId: "",
     password: "",
-    userType: "admin"
-  })
+  });
 
   const handleInputData = (e) => {
     setInputData((prev) => {
       return {
         ...prev,
-        [e.target.name]: e.target.value
-      }
-    })
-  }
+        [e.target.name]: e.target.value,
+      };
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:4000/login", inputData)
-  }
-
+    axios.post("http://localhost:4000/login", inputData);
+  };
 
   const boxStyle = {
     display: "flex",
@@ -44,26 +44,6 @@ function LoginForm () {
       <form onSubmit={handleSubmit}>
         <TextField
           sx={formStyle}
-          variant="standard"
-          type="text"
-          required
-          label="User ID"
-          name="userId"
-          value={inputData.userId}
-          onChange={handleInputData}
-        />
-        <TextField
-          sx={formStyle}
-          variant="standard"
-          type="password"
-          required
-          label="Password"
-          name="password"
-          value={inputData.password}
-          onChange={handleInputData}
-        />
-        <TextField
-          sx={formStyle}
           id="outlined-select-currency"
           select
           defaultValue="admin"
@@ -79,6 +59,40 @@ function LoginForm () {
             User
           </MenuItem>
         </TextField>
+        {inputData.userType === "admin" ? (
+          <TextField
+            sx={formStyle}
+            variant="standard"
+            type="text"
+            required
+            label="Admin ID"
+            name="adminId"
+            value={inputData.adminId}
+            onChange={handleInputData}
+          />
+        ) : (
+          <TextField
+            sx={formStyle}
+            variant="standard"
+            type="text"
+            required
+            label="User ID"
+            name="userId"
+            value={inputData.userId}
+            onChange={handleInputData}
+          />
+        )}
+
+        <TextField
+          sx={formStyle}
+          variant="standard"
+          type="password"
+          required
+          label="Password"
+          name="password"
+          value={inputData.password}
+          onChange={handleInputData}
+        />
         <Button sx={formStyle} type="submit" variant="contained">
           LOGIN
         </Button>

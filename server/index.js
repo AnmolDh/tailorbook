@@ -32,7 +32,7 @@ const User = mongoose.model("User", userSchema);
 const Admin = mongoose.model("Admin", adminSchema);
 
 const testAdmin = {
-  userId: "12345",
+  adminId: "12345",
   password: "12345",
   users: [],
 };
@@ -40,10 +40,11 @@ const testAdmin = {
 !(await Admin.findOne({ userId: testAdmin.userId })) && Admin.create(testAdmin);
 
 app.post("/login", (req, res) => {
-  const reqUserId = req.body.userId;
-  const reqPassword = req.body.password;
   const reqUserType = req.body.userType;
-  console.log(reqUserId, reqPassword, reqUserType);
+  const reqUserId = req.body.userId;
+  const reqAdminId = req.body.adminId;
+  const reqPassword = req.body.password;
+  console.log(reqUserType, reqAdminId, reqUserId, reqPassword);
   // if (userType === "admin") {
   //   Admin.create({
   //     userId: reqUserId,
