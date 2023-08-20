@@ -1,9 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
-import Button from "@mui/material/Button";
+import { Box, TextField, MenuItem, Button } from "@mui/material";
 
 function LoginForm() {
   const [inputData, setInputData] = useState({

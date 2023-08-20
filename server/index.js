@@ -21,8 +21,8 @@ app.use(bodyParser.json());
 app.use(
   session({
     secret: "blah blah cat",
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
     cookie: { secure: false },
   })
 );
@@ -94,6 +94,21 @@ app.post(
     }
   }
 );
+
+app.post("/:action", (req, res) => {
+  if (req.isAuthenticated()) {
+    /////////////////////////////// TODO HERE
+    if (req.params.action == "adduser") {
+      const user = new User({
+        username: req.body.username,
+        password: req.body.password,
+        customers: [],
+      });
+    }
+  } else {
+    res.send("it didn't work");
+  }
+});
 
 app.get("/", (req, res) => {
   if (req.isAuthenticated()) {
