@@ -8,8 +8,7 @@ import Button from "@mui/material/Button";
 function LoginForm() {
   const [inputData, setInputData] = useState({
     userType: "admin",
-    adminId: "",
-    userId: "",
+    username: "",
     password: "",
   });
 
@@ -59,29 +58,16 @@ function LoginForm() {
             User
           </MenuItem>
         </TextField>
-        {inputData.userType === "admin" ? (
-          <TextField
-            sx={formStyle}
-            variant="standard"
-            type="text"
-            required
-            label="Admin ID"
-            name="adminId"
-            value={inputData.adminId}
-            onChange={handleInputData}
-          />
-        ) : (
-          <TextField
-            sx={formStyle}
-            variant="standard"
-            type="text"
-            required
-            label="User ID"
-            name="userId"
-            value={inputData.userId}
-            onChange={handleInputData}
-          />
-        )}
+        <TextField
+          sx={formStyle}
+          variant="standard"
+          type="text"
+          required
+          label="Username"
+          name="username"
+          value={inputData.username}
+          onChange={handleInputData}
+        />
 
         <TextField
           sx={formStyle}
