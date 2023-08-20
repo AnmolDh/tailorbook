@@ -23,7 +23,9 @@ function LoginForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:4000/login", inputData);
+    axios.post("http://localhost:4000/login", inputData, {
+      withCredentials: true,
+    });
   };
 
   const boxStyle = {

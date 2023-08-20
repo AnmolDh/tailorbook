@@ -10,42 +10,49 @@ const app = express();
 
 mongoose.connect("mongodb://localhost:27017/tb");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(
   session({
     secret: "blah blah cat",
-    resave: false,
+    resave: true,
     saveUninitialized: true,
-    cookie: { secure: true },
+    cookie: { secure: false },
   })
 );
+app.use(passport.initialize());
+app.use(passport.session());
 
 passport.use(
   new LocalStrategy(async function (username, password, done) {
-    const admin = await Admin.findOne({ username: username });
-    if (!admin) {
+    const user = await Admin.findOne({ username: username });
+    if (!user) {
       return done(null, false);
     }
-    if (!admin.password === password) {
+    if (user.password !== password) {
       return done(null, false);
     }
-    return done(null, admin);
+    return done(null, user);
   })
 );
 
-passport.initialize();
 passport.serializeUser(function (user, cb) {
-  process.nextTick(function () {
-    cb(null, { id: user.id, username: user.username });
-  });
+  cb(null, user.id);
 });
 
-passport.deserializeUser(function (user, cb) {
-  process.nextTick(function () {
-    return cb(null, user);
-  });
+passport.deserializeUser(async function (id, cb) {
+  try {
+    const user = await Admin.findOne({ _id: id });
+    cb(null, user);
+  } catch (err) {
+    cb(err, null);
+  }
 });
 
 const customerSchema = new mongoose.Schema({
@@ -80,12 +87,20 @@ app.post(
   "/login",
   passport.authenticate("local", { failureRedirect: "/login" }),
   (req, res) => {
-    res.redirect("/");
+    if (req.isAuthenticated()) {
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(401);
+    }
   }
 );
 
 app.get("/", (req, res) => {
-  res.send("hello");
+  if (req.isAuthenticated()) {
+    res.send("hello");
+  } else {
+    res.send("it didn't work");
+  }
 });
 
 app.listen(4000, () => {
