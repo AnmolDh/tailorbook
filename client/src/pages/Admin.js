@@ -1,13 +1,27 @@
-import { Box, TextField, Button } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import LoginForm from "../components/LoginForm";
 
 function Admin() {
+  const [adminData, setAdminData] = useState({
+    username: "",
+    userCount: "",
+  });
   const [displayForm, setDisplayForm] = useState(false);
   const [inputData, setInputData] = useState({
     username: "",
     password: "",
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get("http://localhost:4000/admin", {
+        withCredentials: true,
+      });
+      setAdminData(response.data);
+    };
+    fetchData();
+  }, []);
 
   const handleDisplayForm = () => {
     setDisplayForm((prev) => !prev);
@@ -29,52 +43,19 @@ function Admin() {
     });
   };
 
-  const boxStyle = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-  };
-
-  const formStyle = {
-    display: "block",
-    margin: "20px",
-  };
-
   return (
-    <Box sx={boxStyle}>
-      {displayForm ? (
-        <form onSubmit={handleSubmit}>
-          <TextField
-            sx={formStyle}
-            variant="standard"
-            type="text"
-            required
-            label="Username"
-            name="username"
-            value={inputData.username}
-            onChange={handleInputData}
-          />
-          <TextField
-            sx={formStyle}
-            variant="standard"
-            type="password"
-            required
-            label="Password"
-            name="password"
-            value={inputData.password}
-            onChange={handleInputData}
-          />
-          <Button type="submit" sx={formStyle} variant="contained">
-            Add User
-          </Button>
-        </form>
-      ) : (
-        <Button onClick={handleDisplayForm} sx={formStyle} variant="contained">
-          ADD USER
-        </Button>
-      )}
-    </Box>
+    <div>
+      <div>
+        <p>Username: {adminData.username}</p>
+        <p>User Count: {adminData.userCount}</p>
+      </div>
+      <LoginForm
+        type={"add user"}
+        data={inputData}
+        handleData={handleInputData}
+        handleSubmit={handleSubmit}
+      />
+    </div>
   );
 }
 

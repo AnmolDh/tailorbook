@@ -1,30 +1,6 @@
-import { useState } from "react";
-import axios from "axios";
 import { Box, TextField, MenuItem, Button } from "@mui/material";
 
-function LoginForm() {
-  const [inputData, setInputData] = useState({
-    userType: "admin",
-    username: "",
-    password: "",
-  });
-
-  const handleInputData = (e) => {
-    setInputData((prev) => {
-      return {
-        ...prev,
-        [e.target.name]: e.target.value,
-      };
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios.post("http://localhost:4000/login", inputData, {
-      withCredentials: true,
-    });
-  };
-
+function LoginForm(props) {
   const boxStyle = {
     display: "flex",
     justifyContent: "center",
@@ -39,24 +15,26 @@ function LoginForm() {
 
   return (
     <Box sx={boxStyle}>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          sx={formStyle}
-          id="outlined-select-currency"
-          select
-          defaultValue="admin"
-          label="User Type"
-          name="userType"
-          value={inputData.userType}
-          onChange={handleInputData}
-        >
-          <MenuItem key="admin" value="admin">
-            Admin
-          </MenuItem>
-          <MenuItem key="user" value="user">
-            User
-          </MenuItem>
-        </TextField>
+      <form onSubmit={props.handleSubmit}>
+        {props.type === "login" && (
+          <TextField
+            sx={formStyle}
+            id="outlined-select-currency"
+            select
+            defaultValue="admin"
+            label="User Type"
+            name="userType"
+            value={props.data.userType}
+            onChange={props.handleData}
+          >
+            <MenuItem key="admin" value="admin">
+              Admin
+            </MenuItem>
+            <MenuItem key="user" value="user">
+              User
+            </MenuItem>
+          </TextField>
+        )}
         <TextField
           sx={formStyle}
           variant="standard"
@@ -64,8 +42,8 @@ function LoginForm() {
           required
           label="Username"
           name="username"
-          value={inputData.username}
-          onChange={handleInputData}
+          value={props.data.username}
+          onChange={props.handleData}
         />
 
         <TextField
@@ -75,11 +53,11 @@ function LoginForm() {
           required
           label="Password"
           name="password"
-          value={inputData.password}
-          onChange={handleInputData}
+          value={props.data.password}
+          onChange={props.handleData}
         />
         <Button sx={formStyle} type="submit" variant="contained">
-          LOGIN
+          {props.type}
         </Button>
       </form>
     </Box>

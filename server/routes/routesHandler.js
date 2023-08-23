@@ -32,4 +32,14 @@ app.get("/", (req, res) => {
   }
 });
 
+app.get("/admin", async (req, res) => {
+  if (req.isAuthenticated()) {
+    const admin = await Admin.findOne({ _id: req.user._id });
+    res.send({
+      username: admin.username,
+      userCount: admin.users.length,
+    });
+  }
+});
+
 export default app;
