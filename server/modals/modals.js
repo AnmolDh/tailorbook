@@ -7,13 +7,13 @@ const customerSchema = new mongoose.Schema({
 const userSchema = new mongoose.Schema({
   username: String,
   password: String,
-  customers: [customerSchema],
+  customers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Customer" }],
 });
 
 const adminSchema = new mongoose.Schema({
   username: String,
   password: String,
-  users: [userSchema],
+  users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 });
 
 const Customer = mongoose.model("Customer", customerSchema);

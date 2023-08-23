@@ -4,20 +4,20 @@ const app = express();
 
 app.post("/:action", async (req, res) => {
   if (req.isAuthenticated()) {
-    ///////////////////////// TODO FROM HERE /////////////////////////
     if (req.params.action == "adduser") {
+      const admin = await Admin.findOne({ _id: req.user._id });
       const user = new User({
         username: req.body.username,
         password: req.body.password,
         customers: [],
       });
-      const admin = await Admin.findOneAndUpdate(
-        { _id: req.user._id },
-        { $push: { users: user } },
-        { new: true }
-      );
-      console.log(admin);
-      res.sendStatus(200);
+      if (await User.findOne({ username: user.username })) {
+        res.send("already there");
+      } else {
+        user.save();
+        admin.users.push(user);
+        admin.save();
+      }
     }
   } else {
     res.send("it didn't work");
