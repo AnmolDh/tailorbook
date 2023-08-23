@@ -23,7 +23,7 @@ function Admin() {
   };
 
   const handleSubmit = (e) => {
-    e.preventdefault();
+    e.preventDefault();
     axios.post("http://localhost:4000/adduser", inputData, {
       withCredentials: true,
     });

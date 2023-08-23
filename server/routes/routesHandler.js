@@ -1,8 +1,8 @@
-import { User } from "../modals/modals.js";
+import { Admin, User } from "../modals/modals.js";
 import express from "express";
 const app = express();
 
-app.post("/:action", (req, res) => {
+app.post("/:action", async (req, res) => {
   if (req.isAuthenticated()) {
     ///////////////////////// TODO FROM HERE /////////////////////////
     if (req.params.action == "adduser") {
@@ -11,6 +11,13 @@ app.post("/:action", (req, res) => {
         password: req.body.password,
         customers: [],
       });
+      const admin = await Admin.findOneAndUpdate(
+        { _id: req.user._id },
+        { $push: { users: user } },
+        { new: true }
+      );
+      console.log(admin);
+      res.sendStatus(200);
     }
   } else {
     res.send("it didn't work");
