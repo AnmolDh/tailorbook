@@ -3,14 +3,22 @@ import { useState } from "react";
 import axios from "axios";
 
 function Login() {
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.post("http://localhost:4000/login", inputData, {
-      withCredentials: true,
-    });
-    inputData.userType === "admin"
-      ? window.location.replace("/admin")
-      : window.location.replace("/user");
+    const response = await axios.post(
+      "http://localhost:4000/login",
+      inputData,
+      {
+        withCredentials: true,
+      }
+    );
+    if (!response.data.invalid) {
+      inputData.userType === "admin"
+        ? window.location.replace("/admin")
+        : window.location.replace("/user");
+    } else {
+      window.location.replace("/");
+    }
   };
   const [inputData, setInputData] = useState({
     userType: "admin",

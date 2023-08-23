@@ -6,6 +6,7 @@ function Admin() {
   const [adminData, setAdminData] = useState({
     username: "",
     userCount: "",
+    users: [],
   });
   const [displayForm, setDisplayForm] = useState(false);
   const [inputData, setInputData] = useState({
@@ -38,7 +39,7 @@ function Admin() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:4000/adduser", inputData, {
+    axios.post("http://localhost:4000/admin/adduser", inputData, {
       withCredentials: true,
     });
   };

@@ -10,6 +10,7 @@ passport.use(
     done
   ) {
     if (req.body.userType == "admin") {
+      console.log("logged as admin");
       const admin = await Admin.findOne({ username: username });
       if (!admin) {
         return done(null, false);
@@ -19,6 +20,7 @@ passport.use(
       }
       return done(null, admin);
     } else {
+      console.log("logged as user");
       const user = await User.findOne({ username: username });
       if (!user) {
         return done(null, false);

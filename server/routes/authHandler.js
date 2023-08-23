@@ -4,14 +4,16 @@ const app = express();
 
 app.post(
   "/login",
-  passport.authenticate("local", { failureRedirect: "/login" }),
+  passport.authenticate("local", { failureRedirect: "/invalid_credentials" }),
   (req, res) => {
-    if (req.isAuthenticated()) {
-      res.sendStatus(200);
-    } else {
-      res.sendStatus(401);
-    }
+    res.sendStatus(200);
   }
 );
+
+app.get("/invalid_credentials", (req, res) => {
+  res.json({
+    invalid: true,
+  });
+});
 
 export default app;

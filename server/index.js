@@ -36,16 +36,13 @@ app.use(handleAuthRoutes);
 app.use(handleRoutes);
 
 passport.serializeUser(function (user, cb) {
-  cb(null, user.id);
+  cb(null, user);
 });
 
-passport.deserializeUser(async function (id, cb) {
-  try {
-    const user = await Admin.findOne({ _id: id });
-    cb(null, user);
-  } catch (err) {
-    cb(err, null);
-  }
+passport.deserializeUser(function (user, cb) {
+  process.nextTick(function () {
+    return cb(null, user);
+  });
 });
 
 const testAdmin = {
