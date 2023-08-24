@@ -1,48 +1,33 @@
+import styled from "styled-components";
 import LoginForm from "../components/LoginForm";
-import { useState } from "react";
-import axios from "axios";
+import Header from "../components/Header";
+import Hero from "../components/Hero";
 
-function Login() {
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await axios.post(
-      "http://localhost:4000/login",
-      inputData,
-      {
-        withCredentials: true,
-      }
-    );
-    if (!response.data.invalid) {
-      inputData.userType === "admin"
-        ? window.location.replace("/admin")
-        : window.location.replace("/user");
-    } else {
-      window.location.replace("/");
-    }
-  };
-  const [inputData, setInputData] = useState({
-    userType: "admin",
-    username: "",
-    password: "",
-  });
+const BodyDiv = styled.div`
+  background-image: radial-gradient(circle at 0% 0%, #5de0e6, #004aad);
+  width: 100vw;
+  height: 100vh;
+  padding: 5vh 8vw;
+  color: white;
+`;
 
-  const handleInputData = (e) => {
-    setInputData((prev) => {
-      return {
-        ...prev,
-        [e.target.name]: e.target.value,
-      };
-    });
-  };
+const MainDiv = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  font-family: "Old Standard TT", sans-serif;
+`;
 
+function Test() {
   return (
-    <LoginForm
-      type={"login"}
-      data={inputData}
-      handleData={handleInputData}
-      handleSubmit={handleSubmit}
-    />
+    <BodyDiv>
+      <Header />
+      <MainDiv>
+        <Hero />
+        <LoginForm />
+      </MainDiv>
+    </BodyDiv>
   );
 }
 
-export default Login;
+export default Test;

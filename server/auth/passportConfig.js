@@ -9,7 +9,7 @@ passport.use(
     password,
     done
   ) {
-    if (req.body.userType == "admin") {
+    if (req.body.usertype == "admin") {
       console.log("logged as admin");
       const admin = await Admin.findOne({ username: username });
       if (!admin) {
