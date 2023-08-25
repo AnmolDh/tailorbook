@@ -22,7 +22,7 @@ const LI = styled.li`
 function Header() {
   return (
     <HeaderDiv>
-      <h1>TAILORBOOK</h1>
+      <h1>Blah Blah Brrr</h1>
       <UL>
         <LI>ABOUT</LI>
         <LI>CONTACT</LI>

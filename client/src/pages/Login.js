@@ -4,11 +4,11 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 
 const BodyDiv = styled.div`
-  background-image: radial-gradient(circle at 0% 0%, #5de0e6, #004aad);
+  background-image: radial-gradient(circle at 0% 0%, #f8f0e5, #eadbc8);
   width: 100vw;
   height: 100vh;
   padding: 5vh 8vw;
-  color: white;
+  color: #102C57;
 `;
 
 const MainDiv = styled.div`

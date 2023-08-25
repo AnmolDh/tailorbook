@@ -5,7 +5,7 @@ import axios from "axios";
 
 const LoginDiv = styled.div`
   flex: 1;
-  border: 4px solid white;
+  border: 4px solid #102C57;
   border-radius: 30px;
   margin: 10vh 0;
   text-align: center;
@@ -14,24 +14,24 @@ const LoginDiv = styled.div`
 
 const CustomTextField = styled(TextField)({
   "& .MuiInputLabel-root": {
-    color: "white",
+    color: "#102C57",
     "&.Mui-focused": {
-      color: "white",
+      color: "#102C57",
     },
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
-      borderColor: "white",
+      borderColor: "#102C57",
       borderRadius: "20px",
     },
     "& input": {
-      color: "white",
+      color: "#102C57",
     },
     "&:hover fieldset": {
-      borderColor: "white",
+      borderColor: "#102C57",
     },
     "&.Mui-focused fieldset": {
-      borderColor: "white",
+      borderColor: "#102C57",
     },
   },
 });
@@ -41,10 +41,12 @@ const Button = styled.button`
   border: none;
   border-radius: 20px;
   font-weight: bold;
-  border: 3px solid white;
+  background-color: #f8f4ea;
+  color: #102c57;
+  letter-spacing: 3px;
 
   &:hover {
-    background-color: transparent;
+    background-color: #102c57;
     color: white;
   }
 `;

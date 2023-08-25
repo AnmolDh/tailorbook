@@ -1,6 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import LoginForm from "../components/LoginForm";
+import Header from "../components/Header";
+import styled from "styled-components";
+
+const BodyDiv = styled.div`
+  background-color: #F8F4EA;
+  width: 100vw;
+  height: 100vh;
+  padding: 5vh 8vw;
+  color: black;
+`;
+
 
 function Admin() {
   const [adminData, setAdminData] = useState({
@@ -46,16 +56,13 @@ function Admin() {
 
   return (
     <div>
-      <div>
-        <p>Username: {adminData.username}</p>
-        <p>User Count: {adminData.userCount}</p>
-      </div>
-      <LoginForm
-        type={"add user"}
-        data={inputData}
-        handleData={handleInputData}
-        handleSubmit={handleSubmit}
-      />
+      <BodyDiv>
+        {/* <Header/> */}
+        <div>
+          <p>Username: {adminData.username}</p>
+          <p>User Count: {adminData.userCount}</p>
+        </div>
+      </BodyDiv>
     </div>
   );
 }
